@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fund-localhost": "npx hardhat run scripts/fund.ts --network localhost",
+    "withdraw-localhost": "npx hardhat run scripts/withdraw.ts --network localhost",
+    "test:staging": "npx hardhat test --network sepolia",
+    "lint": "npx solhint 'contracts/*.sol'",
+    "lint:fix": "npx solhint 'contracts/*.sol' --fix"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +32,7 @@
     "hardhat": "^2.17.2",
     "hardhat-deploy": "^0.11.37",
     "hardhat-gas-reporter": "^1.0.8",
+    "solhint": "^3.6.2",
     "solidity-coverage": "^0.8.0",
     "ts-node": ">=8.0.0",
     "typechain": "^8.1.0",

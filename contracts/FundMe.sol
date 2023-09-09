@@ -46,8 +46,13 @@ contract FundMe {
     }
 
     function withdraw() external verifyOwner {
-        for (uint Index = 0; Index < funders.length; Index++) {
-            AmountToAddress[funders[Index]] = 0;
+        address[] memory m_funders = funders;
+        for (
+            uint fundersIndex = 0;
+            fundersIndex < m_funders.length;
+            fundersIndex++
+        ) {
+            AmountToAddress[m_funders[fundersIndex]] = 0;
         }
         //refresh funders list
         funders = new address[](0);
