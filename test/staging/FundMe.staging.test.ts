@@ -1,11 +1,12 @@
 import { ethers, getNamedAccounts, network } from "hardhat";
 import { developmentChains } from "../../helper-hardhat-config";
 import { assert } from "chai";
+import { FundMe } from "../../typechain-types";
 
 developmentChains.includes(network.name)
   ? describe.skip
   : describe("FundMe", function () {
-      let FundMe, deployer;
+      let FundMe: FundMe, deployer;
       const FUND_AMOUNT = ethers.parseEther("0.04");
       beforeEach(async function () {
         deployer = (await getNamedAccounts()).deployer;

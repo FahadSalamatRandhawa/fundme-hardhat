@@ -1,12 +1,13 @@
 import { assert, expect } from "chai";
 import { deployments, ethers, getNamedAccounts, network } from "hardhat";
 import { developmentChains } from "../../helper-hardhat-config";
+import { FundMe, MockV3Aggregator } from "../../typechain-types";
 
 !developmentChains.includes(network.name)
   ? describe.skip
   : describe("Fund Me", function () {
       console.log(network.name);
-      let FundMe, deployer, MockV3Aggregator;
+      let FundMe: FundMe, deployer: any, MockV3Aggregator: MockV3Aggregator;
       const FUND_AMOUNT = ethers.parseEther("0.5");
       beforeEach(async function () {
         deployer = (await getNamedAccounts()).deployer;
@@ -70,8 +71,11 @@ import { developmentChains } from "../../helper-hardhat-config";
           // );
           const withdrawResponse = await FundMe.withdraw();
           const withdrawReceipt = await withdrawResponse.wait(1);
-          const { gasPrice, gasUsed } = withdrawReceipt;
-          const gasCost = gasPrice * gasUsed;
+          let gasCost = BigInt(0);
+          if (withdrawReceipt) {
+            const { gasPrice, gasUsed } = withdrawReceipt;
+            gasCost = gasPrice * gasUsed;
+          }
 
           const endingBalanceForFundMe = await ethers.provider.getBalance(
             await FundMe.getAddress()
@@ -102,8 +106,11 @@ import { developmentChains } from "../../helper-hardhat-config";
           );
           const withdrawResponse = await FundMe.withdraw();
           const withdrawReceipt = await withdrawResponse.wait(1);
-          const { gasPrice, gasUsed } = withdrawReceipt;
-          const gasCost = gasPrice * gasUsed;
+          let gasCost = BigInt(0);
+          if (withdrawReceipt) {
+            const { gasPrice, gasUsed } = withdrawReceipt;
+            gasCost = gasPrice * gasUsed;
+          }
 
           const endingBalanceForFundMe = await ethers.provider.getBalance(
             await FundMe.getAddress()
@@ -120,7 +127,10 @@ import { developmentChains } from "../../helper-hardhat-config";
           );
           await expect(FundMe.funders(0)).to.be.reverted;
           for (let i = 1; i < 8; i++) {
-            assert.equal(await FundMe.AmountToAddress(accounts[i].address), 0);
+            assert.equal(
+              await FundMe.AmountToAddress(accounts[i].address),
+              BigInt(0)
+            );
           }
         });
         it("only allows owner to withdraw", async () => {
