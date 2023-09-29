@@ -12,11 +12,10 @@ const config: HardhatUserConfig = {
   },
   defaultNetwork: "hardhat",
   networks: {
+    //add networks for testing
     sepolia: {
       url: "https://eth-sepolia.g.alchemy.com/v2/demo",
-      accounts: [
-        "68d8ed1e1e38c44a74d5c8b5590ddb36eef074324e45ff1e7c8eeebc01f25977",
-      ],
+      accounts: ["Your Private Key"],
       chainId: 11155111,
     },
     rinkeby: {
